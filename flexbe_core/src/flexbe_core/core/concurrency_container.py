@@ -16,7 +16,7 @@ class ConcurrencyContainer(EventState, OperatableStateMachine):
     A state machine that can be operated.
     It synchronizes its current state with the mirror and supports some control mechanisms.
     """
-    
+
     def __init__(self, conditions=dict(), *args, **kwargs):
         super(ConcurrencyContainer, self).__init__(*args, **kwargs)
         self._conditions = conditions
@@ -55,9 +55,9 @@ class ConcurrencyContainer(EventState, OperatableStateMachine):
                     state._get_deep_state()._notify_skipped()
                 continue
             state_sleep_dur = state._rate.remaining().to_sec()
+            self._returned_outcomes[state.name] = self._execute_state(state)
             if state_sleep_dur <= 0:
                 sleep_dur = 0
-                self._returned_outcomes[state.name] = self._execute_state(state)
             else:
                 sleep_dur = min(sleep_dur, state_sleep_dur)
         if sleep_dur > 0:
@@ -71,7 +71,7 @@ class ConcurrencyContainer(EventState, OperatableStateMachine):
             if all(self._returned_outcomes.has_key(sn) and self._returned_outcomes[sn] == o for sn,o in cond):
                 outcome = oc
                 break
-        
+
         # preempt (?)
         if outcome == self._loopback_name:
             return None
