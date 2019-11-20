@@ -13,5 +13,5 @@ install:
 before_script:
   - ~/flexbe_ci/ci_scripts/before_script.bash
   
-script:
-  - ~/flexbe_ci/ci_scripts/script.bash
+#script:
+#  - ~/flexbe_ci/ci_scripts/script.bash
