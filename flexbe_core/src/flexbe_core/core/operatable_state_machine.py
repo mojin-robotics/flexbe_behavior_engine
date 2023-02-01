@@ -92,6 +92,7 @@ class OperatableStateMachine(PreemptableStateMachine):
     def _execute_current_state(self):
         # catch any exception and keep state active to let operator intervene
         try:
+            breakpoint()
             outcome = super(OperatableStateMachine, self)._execute_current_state()
             self._last_exception = None
         except Exception as e:
@@ -221,6 +222,7 @@ class OperatableStateMachine(PreemptableStateMachine):
                 state._disable_ros_control()
 
     def on_exit(self, userdata):
+        breakpoint()
         if self._current_state is not None:
             ud = UserData(reference=self.userdata, input_keys=self._current_state.input_keys,
                           output_keys=self._current_state.output_keys,
