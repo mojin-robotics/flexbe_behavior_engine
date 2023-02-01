@@ -111,6 +111,8 @@ class OperatableStateMachine(PreemptableStateMachine):
                 msg.behavior_id = self.id
                 msg.current_state_checksum = zlib.adler32(self.get_deep_state().path.encode()) & 0x7fffffff
                 self._pub.publish('flexbe/mirror/sync', msg)
+        if outcome:
+            self.on_exit(self.userdata)
         return outcome
 
     def is_transition_allowed(self, label, outcome):
