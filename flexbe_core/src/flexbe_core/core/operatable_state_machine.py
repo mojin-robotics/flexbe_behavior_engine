@@ -92,7 +92,6 @@ class OperatableStateMachine(PreemptableStateMachine):
     def _execute_current_state(self):
         # catch any exception and keep state active to let operator intervene
         try:
-            breakpoint()
             outcome = super(OperatableStateMachine, self)._execute_current_state()
             self._last_exception = None
         except Exception as e:
@@ -111,8 +110,6 @@ class OperatableStateMachine(PreemptableStateMachine):
                 msg.behavior_id = self.id
                 msg.current_state_checksum = zlib.adler32(self.get_deep_state().path.encode()) & 0x7fffffff
                 self._pub.publish('flexbe/mirror/sync', msg)
-        if outcome:
-            self.on_exit(self.userdata)
         return outcome
 
     def is_transition_allowed(self, label, outcome):
