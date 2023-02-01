@@ -88,7 +88,10 @@ class StateMachine(State):
         with UserData(reference=self._userdata, remap=self._remappings[self._current_state.name],
                       input_keys=self._current_state.input_keys, output_keys=self._current_state.output_keys
                       ) as userdata:
+            print(f"{self.name}: BEFORE _current_state={self._current_state.name}, userdata={userdata}")
+            # breakpoint()
             outcome = self._current_state.execute(userdata)
+            print(f"{self.name}: AFTER  _current_state={self._current_state.name}, userdata={userdata}")
         if outcome is not None:
             try:
                 target = self._transitions[self._current_state.name][outcome]

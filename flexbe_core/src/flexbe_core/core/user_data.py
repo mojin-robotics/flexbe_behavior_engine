@@ -88,3 +88,6 @@ class UserData(object):
                 "  Input Keys: %s\n  Output Keys: %s\n  Data: %s\n  Remapping: %s\n  Reference: %s"
                 % (len(self), str(self._input_keys), str(self._output_keys), str(self._data),
                    str(self._remap), data_str))
+
+    def __repr__(self):
+        return str(self)
