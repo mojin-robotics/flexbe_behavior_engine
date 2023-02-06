@@ -18,6 +18,10 @@ class UserData(object):
         self._remap = remap or dict()
         self._hashes = dict()
 
+    @property
+    def name(self):
+        return object_names[id(self)]
+
     def __enter__(self):
         return self
 
@@ -92,7 +96,7 @@ class UserData(object):
 
         return ("UserData object %s with %d data entries:\n"
                 "  Input Keys: %s\n  Output Keys: %s\n  Data: %s\n  Remapping: %s\n  Reference: %s"
-                % (object_names[id(self)], len(self), str(self._input_keys), str(self._output_keys), str(self._data),
+                % (self.name, len(self), str(self._input_keys), str(self._output_keys), str(self._data),
                    str(self._remap), data_str))
 
     def __repr__(self):
