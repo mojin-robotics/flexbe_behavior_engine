@@ -58,6 +58,7 @@ class UserData(object):
 
     def __setitem__(self, key, value):
         if self._output_keys is not None and key in self._output_keys:
+            print(f"{self.name}: Assigning value '{value}' for key '{key}' to our reference {self.reference.name}")
             self._reference[self._remap.get(key, key)] = value
         self._data[key] = value
 
