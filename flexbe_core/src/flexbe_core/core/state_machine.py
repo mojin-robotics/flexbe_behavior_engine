@@ -17,6 +17,7 @@ class StateMachine(State):
         self._remappings = dict()
         self._current_state = None
         self._own_userdata = UserData()
+        print(f"{self._name}._own_userdata = {self._own_userdata.name}")
         self._userdata = None
         self._previously_opened_container = None
 

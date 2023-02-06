@@ -17,15 +17,18 @@ class UserData(object):
         self._output_keys = output_keys
         self._remap = remap or dict()
         self._hashes = dict()
+        print(f"Created {self.name}")
 
     @property
     def name(self):
         return object_names[id(self)]
 
     def __enter__(self):
+        print(f"ENTER context of {self.name}")
         return self
 
     def __exit__(self, *args):
+        print(f"EXIT  context of {self.name}")
         for key, value in self._hashes.items():
             if value != hash(repr(self._data[key])):
                 raise UserDataError("Illegally modified input-only key '%s', declare it as output." % key)
@@ -58,7 +61,7 @@ class UserData(object):
 
     def __setitem__(self, key, value):
         if self._output_keys is not None and key in self._output_keys:
-            print(f"{self.name}: Assigning value '{value}' for key '{key}' to our reference {self.reference.name}")
+            print(f"{self.name}: Assigning value '{value}' for key '{key}' to our reference {self._reference.name}")
             self._reference[self._remap.get(key, key)] = value
         self._data[key] = value
 
@@ -91,6 +94,7 @@ class UserData(object):
             del self._data[remove_key]
 
     def __len__(self):
+        print(f"Getting len({self.name}): {len(self._data) + len(self._reference)}")
         return len(self._data) + len(self._reference)
 
     def __str__(self):
