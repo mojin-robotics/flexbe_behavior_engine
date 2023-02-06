@@ -74,15 +74,19 @@ class UserData(object):
         self[key] = value
 
     def __call__(self, reference=None, add_from=None, update_from=None, remove_key=None):
+        # print(f"{self.name}.__call__")
         self._reference = reference or self._reference
         if isinstance(add_from, UserData):
+            print(f"{self.name}.__call__: adding {add_from._data.keys()} from {add_from.name}")
             for key, value in add_from._data.items():
                 if key not in self._data:
                     self._data[key] = value
         if isinstance(update_from, UserData):
+            print(f"{self.name}.__call__: updating {add_from._data.keys()} from {add_from.name}")
             for key, value in update_from._data.items():
                 self._data[key] = value
         if remove_key is not None and remove_key in self._data:
+            print(f"{self.name}.__call__: removing key {remove_key}")
             del self._data[remove_key]
 
     def __len__(self):
