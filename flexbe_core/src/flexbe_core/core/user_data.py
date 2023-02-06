@@ -2,6 +2,11 @@
 from copy import deepcopy
 from flexbe_core.core.exceptions import UserDataError
 
+from collections import defaultdict
+from string import ascii_uppercase
+letter_generator = iter(ascii_uppercase)
+object_names = defaultdict(lambda: next(letter_generator))  # For debugging, assume we won't exhaust the alphabet...
+
 
 class UserData(object):
 
@@ -84,9 +89,10 @@ class UserData(object):
             data_str = '\n  '.join(str(self._reference).split('\n'))
         else:
             data_str = str(self._reference)
-        return ("UserData object with %d data entries:\n"
+
+        return ("UserData object %s with %d data entries:\n"
                 "  Input Keys: %s\n  Output Keys: %s\n  Data: %s\n  Remapping: %s\n  Reference: %s"
-                % (len(self), str(self._input_keys), str(self._output_keys), str(self._data),
+                % (object_names[id(self)], len(self), str(self._input_keys), str(self._output_keys), str(self._data),
                    str(self._remap), data_str))
 
     def __repr__(self):
