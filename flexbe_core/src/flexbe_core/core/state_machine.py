@@ -77,7 +77,7 @@ class StateMachine(State):
             self.assert_consistent_transitions()
             self._current_state = self.initial_state
             print(f"{self.name}.execute: userdata = {userdata.name if userdata else None}")
-            self._userdata = userdata or UserData()
+            self._userdata = userdata if userdata is not None else UserData()
             print(f"{self.name}.execute: self._userdata = {self._userdata.name}")
             self._userdata(add_from=self._own_userdata)
         outcome = self._execute_current_state()
