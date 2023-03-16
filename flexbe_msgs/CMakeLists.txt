@@ -19,6 +19,7 @@ add_message_files(FILES
   SynthesisErrorCodes.msg
   SynthesisRequest.msg
   UICommand.msg
+  Oink.msg
 )
 add_action_files(FILES 
   BehaviorExecution.action
