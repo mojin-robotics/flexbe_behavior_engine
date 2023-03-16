@@ -358,7 +358,7 @@ class TestCore(unittest.TestCase):
         cc.execute(None)
         cc.sleep()
         cc.execute(None)
-        self.assertAlmostEqual(cc.sleep_duration, .1, places=2)
+        self.assertLessEqual(cc.sleep_duration, .1, places=2)  # OperableStateMachine might return instantly - see mojin-robotics/flexbe_behavior_engine/pull/19
         cc.sleep()
         cc['main'].set_rate(15)
         cc['side'].set_rate(10)
