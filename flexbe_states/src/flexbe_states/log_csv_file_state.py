@@ -30,15 +30,19 @@ class LogCsvFileState(EventState):
         return "done"
 
     def on_enter(self, userdata):
-        # Generate CSV string
-        csv_string = self._text
-        for key in self._additional_keys:
-            csv_string += ";" + str(getattr(userdata, key))
+        try:
+            # Generate CSV string
+            csv_string = self._text
+            for key in self._additional_keys:
+                csv_string += ";" + str(getattr(userdata, key))
 
-        # Log
-        if self._log:
-            Logger.log(csv_string, self._severity)
+            # Log
+            if self._log:
+                Logger.log(csv_string, self._severity)
 
-        # Append to file with current timestamp
-        with open(os.path.expanduser(self._filepath), "a") as file_object:
-            file_object.write(str(time.time()) + ";" + csv_string + "\n")
+            # Append to file with current timestamp
+            with open(os.path.expanduser(self._filepath), "a") as file_object:
+                file_object.write(str(time.time()) + ";" + csv_string + "\n")
+
+        except Exception as ex:
+            Logger.logerr(f"[LogCsvFileState] Exception: {ex}")
