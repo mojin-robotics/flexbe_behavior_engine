@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+import rospy
+
 from flexbe_core.logger import Logger
 from flexbe_core.core.user_data import UserData
 from flexbe_core.core.event_state import EventState
@@ -17,6 +20,7 @@ class ConcurrencyContainer(OperatableStateMachine):
         super(ConcurrencyContainer, self).__init__(*args, **kwargs)
         self._conditions = conditions
         self._returned_outcomes = dict()
+        self._rate = rospy.Rate(100)
 
     def sleep(self):
         self.wait(seconds=self.sleep_duration)
@@ -30,6 +34,10 @@ class ConcurrencyContainer(OperatableStateMachine):
         return sleep_dur if sleep_dur is not None else 0.0
 
     def _execute_current_state(self):
+        # to prevent busy waiting / busy loop, sleep for a short time
+        # first execution will result in a very short sleep as the rate is already fulfilled,
+        # this is a desired behavior.
+        self._rate.sleep()
         # execute all states that are done with sleeping and determine next sleep duration
         for state in self._states:
             if state.name in list(self._returned_outcomes.keys()) and self._returned_outcomes[state.name] is not None:
