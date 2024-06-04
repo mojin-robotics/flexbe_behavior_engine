@@ -20,7 +20,7 @@ class ConcurrencyContainer(OperatableStateMachine):
         super(ConcurrencyContainer, self).__init__(*args, **kwargs)
         self._conditions = conditions
         self._returned_outcomes = dict()
-        self._rate = rospy.Rate(100)
+        self._rate = rospy.Rate(200)
 
     def sleep(self):
         self.wait(seconds=self.sleep_duration)
