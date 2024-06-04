@@ -12,7 +12,8 @@ class RosState(State):
 
     def __init__(self, *args, **kwargs):
         super(RosState, self).__init__(*args, **kwargs)
-        self._rate = rospy.Rate(10)
+        self._polling_rate = rospy.get_param_cached('/flexbe/polling_rate', 10)
+        self._rate = rospy.Rate(self._polling_rate)
         self._is_controlled = False
 
         self._pub = ProxyPublisher()
