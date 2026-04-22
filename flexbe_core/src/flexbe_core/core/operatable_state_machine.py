@@ -222,7 +222,7 @@ class OperatableStateMachine(PreemptableStateMachine):
 
     def on_exit(self, userdata):
         if self._current_state is not None:
-            ud = UserData(reference=self.userdata, input_keys=self._current_state.input_keys,
+            ud = UserData(reference=self._userdata, input_keys=self._current_state.input_keys,
                           output_keys=self._current_state.output_keys,
                           remap=self._remappings[self._current_state.name])
             self._current_state._entering = True

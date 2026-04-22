@@ -74,7 +74,7 @@ class ConcurrencyContainer(OperatableStateMachine):
             return None
 
         # trigger on_exit for those states that are not done yet
-        self.on_exit(self.userdata,
+        self.on_exit(self._userdata,
                      states=[s for s in self._states if (s.name not in list(self._returned_outcomes.keys()) or
                                                          self._returned_outcomes[s.name] is None)])
         self._returned_outcomes = dict()
